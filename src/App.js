@@ -1,58 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllPosts, loadPosts } from "./features/posts/postSlice";
+import { fetchAllUsers, loadingUsers } from "./features/user/userSlice";
+import { PageRoutes } from "./routing";
 
-function App() {
+export const App = () => {
+  const dispatch = useDispatch();
+  const login = useSelector((state) => state.auth);
+  const currentUser = login.login;
+  const user = useSelector((state) => state.users);
+  const posts = useSelector((state) => state.posts);
+
+  useEffect(() => {
+    if (currentUser) {
+      axios.defaults.headers.common["Authorization"] = currentUser.token;
+    } else {
+      delete axios.defaults.headers.common["Authorization"];
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser.token) {
+      dispatch(fetchAllPosts());
+      dispatch(loadPosts());
+      dispatch(loadingUsers());
+      dispatch(fetchAllUsers());
+    }
+  }, [currentUser]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <>
+      {(user.loading || posts.loading) && <p>loading</p>}
+      <PageRoutes />
+    </>
   );
-}
-
-export default App;
+};
