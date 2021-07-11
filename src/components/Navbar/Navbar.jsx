@@ -44,7 +44,6 @@ export const Navbar = () => {
   const navigate = useNavigate();
   const userDispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.login);
-  console.log(currentUser);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -65,16 +64,7 @@ export const Navbar = () => {
         <IconButton
           size={"md"}
           icon={
-            isOpen ? (
-              <CloseIcon />
-            ) : (
-              <HamburgerIcon
-                color={"brand.offWhite"}
-                _hover={{
-                  backgroundColor: {},
-                }}
-              />
-            )
+            isOpen ? <CloseIcon /> : <HamburgerIcon color={"brand.offWhite"} />
           }
           aria-label={"Open Menu"}
           display={{ md: "none" }}
@@ -105,11 +95,16 @@ export const Navbar = () => {
               variant={"link"}
               cursor={"pointer"}
             >
-              <Avatar size={"sm"} />
+              <Avatar
+                name={`${currentUser.fullName}`}
+                src="https://bit.ly/broken-link"
+                size={"sm"}
+              />
               <ChevronDownIcon
                 fontSize={"1.6rem"}
                 marginTop={".2rem"}
                 marginLeft={".4rem"}
+                color={"brand.offWhite"}
               />
             </MenuButton>
             <MenuList

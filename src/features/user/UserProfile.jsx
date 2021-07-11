@@ -62,6 +62,8 @@ export const UserProfile = () => {
                 size={"xl"}
                 alt={"user"}
                 border={"1px"}
+                name={`${user.fullName}`}
+                src="https://bit.ly/broken-link"
                 borderColor={"brand.ternary"}
               />
             )}

@@ -24,7 +24,6 @@ export const Post = ({ post }) => {
   let user = useSelector((state) =>
     state.users.users.find((user) => user._id === post.userId)
   );
-  console.log(post);
   const currentUser = useSelector((state) => state.auth.login);
   const navigate = useNavigate();
   const postedDate = getPostedTime(new Date(post.createdAt), new Date());
@@ -68,7 +67,12 @@ export const Post = ({ post }) => {
                         onClick={() => navigate(`/${user.userName}`)}
                       />
                     ) : (
-                      <Avatar size={"md"} marginRight={"2"} />
+                      <Avatar
+                        name={`${user.fullName}`}
+                        src="https://bit.ly/broken-link"
+                        size={"md"}
+                        marginRight={"2"}
+                      />
                     )}
                     <Box fontFamily={"default.heading"}>
                       <Heading

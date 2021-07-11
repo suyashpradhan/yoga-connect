@@ -88,7 +88,6 @@ export const postSlice = createSlice({
       state.loading = false;
     },
     [likeButtonPressed.rejected]: (state, action) => {
-      console.error(action.payload);
       state.loading = false;
     },
     [postButtonPressed.fulfilled]: (state, { payload }) => {

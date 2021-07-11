@@ -22,7 +22,6 @@ export const AddPost = () => {
   const user = useSelector((state) => state.users.users).find(
     (user) => user._id === currentUser._id
   );
-  console.log(user);
   const navigate = useNavigate();
   const [postData, setPostData] = useState("");
 
@@ -74,6 +73,8 @@ export const AddPost = () => {
                   ) : (
                     <Avatar
                       size={"md"}
+                      name={`${currentUser.fullName}`}
+                      src="https://bit.ly/broken-link"
                       onClick={() => navigate(`/${currentUser.userName}`)}
                     />
                   )}
