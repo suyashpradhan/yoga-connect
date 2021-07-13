@@ -16,7 +16,7 @@ export const likeButtonPressed = createAsyncThunk(
     try {
       const { data } = await axios.post(`${postsURL}/${postId}/like`);
       if (data.success) {
-        fulfillWithValue(data.post);
+        return fulfillWithValue(data.post);
       }
     } catch (e) {
       return rejectWithValue(e.response.data.message);

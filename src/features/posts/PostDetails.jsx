@@ -33,6 +33,7 @@ export const PostDetails = () => {
       <Box fontFamily={"default.heading"}>
         <Navbar />
         <Box
+          px={"4"}
           paddingBottom={"8"}
           paddingTop={"24"}
           fontFamily={"default.heading"}

@@ -58,7 +58,11 @@ export const Register = () => {
               "https://yoga-trivia-assets.s3.ap-south-1.amazonaws.com/Group+453.svg"
             }
           />
-          <Heading color={"brand.white"} fontSize={"4xl"}>
+          <Heading
+            fontFamily={"default.heading"}
+            color={"brand.white"}
+            fontSize={"4xl"}
+          >
             Yoga Connect
           </Heading>
           <FormControl paddingTop={"2"} color={"brand.offWhite"} id="fullName">
