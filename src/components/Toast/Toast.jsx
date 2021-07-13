@@ -42,9 +42,7 @@ export const Toast = ({ type, message }) => {
               Your account has been created!
             </chakra.p>
             <chakra.p>
-              <Link onClick={() => userDispatch(clearSignupFlag())} to="/login">
-                Login to continue
-              </Link>
+              <Link to="/login">Login to continue</Link>
             </chakra.p>
           </Box>
         </Box>

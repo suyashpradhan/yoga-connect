@@ -6,7 +6,6 @@ import { Box, Image, Heading } from "@chakra-ui/react";
 
 export const SearchUsers = () => {
   let users = useSelector((state) => state.users.users);
-  console.log(users);
   const query = new URLSearchParams(useLocation().search);
   const searchValue = query.get("user");
   users = searchValue

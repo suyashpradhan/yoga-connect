@@ -95,7 +95,6 @@ export const postSlice = createSlice({
       state.loading = false;
     },
     [postButtonPressed.rejected]: (state, action) => {
-      console.error(action.payload);
       state.loading = false;
     },
     [deletePostButtonPressed.fulfilled]: (state, { payload }) => {
@@ -103,7 +102,6 @@ export const postSlice = createSlice({
       state.loading = false;
     },
     [deletePostButtonPressed.rejected]: (state, action) => {
-      console.error(action.payload);
       state.loading = false;
     },
   },

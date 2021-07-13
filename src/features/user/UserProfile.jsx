@@ -12,16 +12,17 @@ import {
 } from "@chakra-ui/react";
 
 import { CgWebsite } from "react-icons/cg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 import { AllPosts } from "../posts/AllPosts";
 import { Navbar } from "../../components/Navbar";
+import { followButtonPressed } from "./userSlice";
 
 export const UserProfile = () => {
   const { userName } = useParams();
-
+  const userDispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.users.users).find(
     (user) => user.userName === userName
   );
@@ -30,6 +31,28 @@ export const UserProfile = () => {
   let userPosts = useSelector((state) => state.posts.posts).filter(
     (post) => post.userId === user._id
   );
+
+  const buttonState = user?._id
+    ? currentUser._id === user._id
+      ? "Edit Profile"
+      : user.followers.includes(currentUser._id)
+      ? "Unfollow"
+      : "Follow"
+    : "";
+
+  const actionAfterButtonClicked = () => {
+    switch (buttonState) {
+      case "Unfollow":
+      case "Follow":
+        userDispatch(followButtonPressed(user._id));
+        break;
+      case "Edit Profile":
+        navigate(`/${userName}/profile`);
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <Box fontFamily={"default.headline"} backgroundColor={"brand.primary"}>
@@ -105,7 +128,7 @@ export const UserProfile = () => {
                   </Link>
                 </Text>
                 <Text fontSize={"sm"} color={"brand.offWhite"}>
-                  Followers
+                  Following
                 </Text>
               </Stack>
               <Stack spacing={0} align={"center"}>
@@ -148,15 +171,15 @@ export const UserProfile = () => {
             <Button
               w={"full"}
               mt={8}
-              bg={"brand.button"}
+              bg={buttonState === "Following" ? "brand.button" : "brand.button"}
               color={"white"}
-              /* onClick={buttonClicked} */
+              onClick={actionAfterButtonClicked}
               rounded={"sm"}
               _hover={{
                 boxShadow: "lg",
               }}
             >
-              Edit Profile
+              {buttonState}
             </Button>
           </Box>
         </Box>

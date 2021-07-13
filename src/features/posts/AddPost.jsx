@@ -40,13 +40,7 @@ export const AddPost = () => {
           backgroundColor={"brand.primary"}
           p={4}
         >
-          <Grid
-            my={"10"}
-            maxW={"8xl"}
-            mx={"auto"}
-            templateColumns="1fr 30rem"
-            gap={10}
-          >
+          <Box my={"10"} maxW={"6xl"} mx={"auto"}>
             <Box>
               <Container
                 minW={"full"}
@@ -124,22 +118,11 @@ export const AddPost = () => {
                   onClick={addPost}
                   disabled={!postData}
                 >
-                  Connect
+                  Send Post
                 </Button>
               </Container>
             </Box>
-            <Box
-              w="100%"
-              boxShadow={"md"}
-              borderColor={"brand.ternary"}
-              border={"1px"}
-              rounded={"lg"}
-              p={6}
-              direction={"column"}
-            >
-              <Heading fontFamily={"default.heading"}>Who to follow</Heading>
-            </Box>
-          </Grid>
+          </Box>
         </Box>
       </Box>
     </>

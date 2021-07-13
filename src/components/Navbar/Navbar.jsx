@@ -1,51 +1,28 @@
-import React from "react";
-
 import {
   Box,
   Flex,
   Avatar,
   HStack,
-  IconButton,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
-  Stack,
+  Heading,
   Image,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { logoutButtonPressed } from "../../features/authentication/authenticationSlice";
-
-const Links = ["Home", "Search Users"];
-
-const NavLink = ({ children }) => ({
-  /* <Link
-    color={"brand.offWhite"}
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: "brand.button",
-      color: "brand.white",
-    }}
-  >
-    {children}
-  </Link> */
-});
 
 export const Navbar = () => {
   const navigate = useNavigate();
   const userDispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.login);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box
       px={4}
@@ -61,31 +38,50 @@ export const Navbar = () => {
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-        <IconButton
-          size={"md"}
-          icon={
-            isOpen ? <CloseIcon /> : <HamburgerIcon color={"brand.offWhite"} />
-          }
-          aria-label={"Open Menu"}
-          display={{ md: "none" }}
-          onClick={isOpen ? onClose : onOpen}
-          backgroundColor={"brand.secondary"}
-        />
         <HStack spacing={8} alignItems={"center"}>
           <Image
             alt={"logo"}
             objectFit={"contain"}
             height={"4rem"}
-            display={{ base: "flex", md: "none" }}
+            display={{ base: "flex" }}
             src={
               "https://yoga-trivia-assets.s3.ap-south-1.amazonaws.com/Group+453.svg"
             }
           />
-          <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
-            {/* {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
-            ))} */}
-          </HStack>
+          <Link to="/home" style={{ color: "brand.offWhite" }}>
+            <Heading
+              fontFamily={"default.heading"}
+              color="brand.white"
+              py={"2"}
+              px={"2"}
+              _hover={{
+                textDecoration: "none",
+                bg: "brand.button",
+                borderRadius: "md",
+              }}
+              fontSize={"lg"}
+              fontWeight={"400"}
+            >
+              Home
+            </Heading>
+          </Link>
+          <Link to="/search">
+            <Heading
+              fontFamily={"default.heading"}
+              color="brand.white"
+              py={"2"}
+              px={"2"}
+              _hover={{
+                textDecoration: "none",
+                bg: "brand.button",
+                borderRadius: "md",
+              }}
+              fontSize={"lg"}
+              fontWeight={"400"}
+            >
+              Search
+            </Heading>
+          </Link>
         </HStack>
         <Flex alignItems={"center"}>
           <Menu backgroundColor={"brand.secondary"}>
@@ -117,13 +113,13 @@ export const Navbar = () => {
               >
                 <MenuItem
                   color={"brand.offWhite"}
-                  _hover={{ color: "brand.white" }}
+                  _hover={{ color: "brand.white", backgroundColor: "unset" }}
                 >
                   Profile
                 </MenuItem>
               </Link>
               <MenuDivider />
-              <MenuItem>
+              <MenuItem _hover={{ backgroundColor: "unset" }}>
                 <Button
                   display="block"
                   width="full"
@@ -148,16 +144,6 @@ export const Navbar = () => {
           </Menu>
         </Flex>
       </Flex>
-
-      {isOpen ? (
-        <Box pb={4} display={{ md: "none" }}>
-          <Stack as={"nav"} spacing={4}>
-            {/*  {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
-            ))} */}
-          </Stack>
-        </Box>
-      ) : null}
     </Box>
   );
 };

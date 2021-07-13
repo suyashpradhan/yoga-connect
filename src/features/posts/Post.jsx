@@ -15,36 +15,26 @@ import {
   deletePostButtonPressed,
   likeButtonPressed,
 } from "./postSlice";
-import { getPostedTime } from "../../utils/time";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 export const Post = ({ post }) => {
-  console.log({ post });
   const postDispatch = useDispatch();
   let user = useSelector((state) =>
     state.users.users.find((user) => user._id === post.userId)
   );
   const currentUser = useSelector((state) => state.auth.login);
   const navigate = useNavigate();
-  const postedDate = getPostedTime(new Date(post.createdAt), new Date());
+
   return (
     <>
-      {post.user === currentUser._id && (
-        <i
-          onClick={() => {
-            postDispatch(fetchAllPosts());
-            postDispatch(deletePostButtonPressed(post._id));
-          }}
-        ></i>
-      )}
       <Box
         paddingBottom={"8"}
         fontFamily={"default.heading"}
         backgroundColor={"brand.primary"}
       >
-        <Grid maxW={"8xl"} mx={"auto"} templateColumns="1fr 30rem" gap={10}>
+        <Box maxW={"8xl"} mx={"auto"} px={"4"}>
           <Container
-            maxW={"8xl"}
+            maxW={"6xl"}
             mx={"auto"}
             boxShadow={"md"}
             borderColor={"brand.secondary"}
@@ -58,7 +48,7 @@ export const Post = ({ post }) => {
               spacing={"12px"}
               onClick={() => navigate(`/${user.userName}/post/${post._id}`)}
             >
-              <Grid gridTemplateColumns={"1fr auto"}>
+              <Grid gridTemplateColumns={"1fr"}>
                 <Box>
                   <Grid gridTemplateColumns={"3.5rem 1fr"} gap={"3"}>
                     {user?.profile_picture ? (
@@ -94,35 +84,11 @@ export const Post = ({ post }) => {
                         display={"inline"}
                         fontWeight={"500"}
                       >
-                        @{user.userName} •
-                        <chakra.p
-                          marginTop={"1rem"}
-                          color={"brand.offWhite"}
-                          display={"inline"}
-                          marginLeft={".4rem"}
-                          fontSize={".9rem"}
-                          fontWeight={"400"}
-                        >
-                          {postedDate} ago
-                        </chakra.p>
+                        @{user.userName}
                       </Heading>
                     </Box>
                   </Grid>
                 </Box>
-                <Heading>
-                  {post.user === currentUser._id && (
-                    <DeleteIcon
-                      color={"brand.offWhite"}
-                      fontSize={"1.5rem"}
-                      cursor={"pointer"}
-                      verticalAlign={"middle"}
-                      onClick={() => {
-                        postDispatch(fetchAllPosts());
-                        postDispatch(deletePostButtonPressed(post._id));
-                      }}
-                    />
-                  )}
-                </Heading>
 
                 <chakra.p
                   color={"brand.white"}
@@ -145,6 +111,14 @@ export const Post = ({ post }) => {
                     verticalAlign: "text-bottom",
                     cursor: "pointer",
                   }}
+                  onClick={() => {
+                    postDispatch(fetchAllPosts());
+                    postDispatch(
+                      likeButtonPressed({
+                        postId: post._id,
+                      })
+                    );
+                  }}
                 />
               ) : (
                 <AiOutlineHeart
@@ -156,7 +130,11 @@ export const Post = ({ post }) => {
                   }}
                   onClick={() => {
                     postDispatch(fetchAllPosts());
-                    postDispatch(likeButtonPressed({ postId: post._id }));
+                    postDispatch(
+                      likeButtonPressed({
+                        postId: post._id,
+                      })
+                    );
                   }}
                 />
               )}
@@ -169,7 +147,7 @@ export const Post = ({ post }) => {
               </chakra.p>
             </Box>
           </Container>
-        </Grid>
+        </Box>
       </Box>
     </>
   );

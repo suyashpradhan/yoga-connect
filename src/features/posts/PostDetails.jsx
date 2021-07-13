@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { likeButtonPressed, fetchAllPosts } from "./postSlice";
 import { Navbar } from "../../components/Navbar";
-import { getPostedTime } from "../../utils/time";
 
 export const PostDetails = () => {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ export const PostDetails = () => {
   let postData = useSelector((state) => state.posts.posts).find(
     (post) => post._id === postId
   );
-  const postedDate = getPostedTime(new Date(postData.createdAt), new Date());
+  console.log(postData);
   const postDispatch = useDispatch();
   const user = useSelector((state) => state.users.users).find(
     (user) => user.userName === userName
@@ -62,7 +61,12 @@ export const PostDetails = () => {
                           onClick={() => navigate(`/${user.userName}`)}
                         />
                       ) : (
-                        <Avatar size={"md"} marginRight={"2"} />
+                        <Avatar
+                          name={`${user.fullName}`}
+                          src="https://bit.ly/broken-link"
+                          size={"md"}
+                          marginRight={"2"}
+                        />
                       )}
                       <Box fontFamily={"default.heading"}>
                         <Heading
@@ -84,17 +88,7 @@ export const PostDetails = () => {
                           display={"inline"}
                           fontWeight={"500"}
                         >
-                          @{user.userName} •
-                          <chakra.p
-                            marginTop={"1rem"}
-                            color={"brand.offWhite"}
-                            display={"inline"}
-                            marginLeft={".4rem"}
-                            fontSize={".9rem"}
-                            fontWeight={"400"}
-                          >
-                            {postedDate} ago
-                          </chakra.p>
+                          @{user.userName}
                         </Heading>
                       </Box>
                     </Grid>
@@ -134,6 +128,14 @@ export const PostDetails = () => {
                       display: "inline",
                       verticalAlign: "text-bottom",
                       cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      postDispatch(fetchAllPosts());
+                      postDispatch(
+                        likeButtonPressed({
+                          postId: postData._id,
+                        })
+                      );
                     }}
                   />
                 ) : (

@@ -11,7 +11,6 @@ export const login = createAsyncThunk(
         userName,
         password,
       });
-      console.log(data);
       if (data.success) {
         return fulfillWithValue(data);
       }
@@ -34,7 +33,6 @@ export const register = createAsyncThunk(
         fullName,
         email,
       });
-      console.log(data);
       if (data.success) {
         return fulfillWithValue(data.success);
       }
@@ -54,7 +52,6 @@ export const userAuthenticationSlice = createSlice({
     },
     error: "",
     status: "",
-    signup: false,
     loading: false,
   },
   reducers: {
@@ -62,9 +59,7 @@ export const userAuthenticationSlice = createSlice({
       state.login = { token: "", _id: "", userName: "" };
       localStorage.clear();
     },
-    clearSignupFlag: (state) => {
-      state.signup = false;
-    },
+
     startLoadingAuth: (state) => {
       state.loading = true;
     },
@@ -105,6 +100,6 @@ export const userAuthenticationSlice = createSlice({
   },
 });
 
-export const { logoutButtonPressed, clearSignupFlag, startLoadingAuth } =
+export const { logoutButtonPressed, startLoadingAuth } =
   userAuthenticationSlice.actions;
 export default userAuthenticationSlice.reducer;
