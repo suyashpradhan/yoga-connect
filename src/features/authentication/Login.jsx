@@ -71,7 +71,7 @@ export const Login = () => {
               <FormLabel>Username</FormLabel>
               <Input
                 type="userName"
-                value={userName}
+                value={"test123"}
                 onChange={(e) => {
                   setInputs((input) => ({
                     ...input,
@@ -95,6 +95,7 @@ export const Login = () => {
                     password: e.target.value,
                   }));
                 }}
+                value={"Example@123"}
               />
             </FormControl>
             <Button
