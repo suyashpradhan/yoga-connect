@@ -7,6 +7,7 @@ import {
   Input,
   Stack,
   Image,
+  useToast,
 } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
@@ -16,6 +17,8 @@ import { Link } from "react-router-dom";
 import { login } from "./authenticationSlice";
 
 export const Login = () => {
+  const toast = useToast();
+
   const [{ userName, password }, setInputs] = useState({
     userName: "",
     password: "",
@@ -35,6 +38,13 @@ export const Login = () => {
   const loginHandler = async (e) => {
     e.preventDefault();
     await dispatch(login({ userName, password }));
+    toast({
+      title: "Successfully Logged in.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      fontFamily: "default.heading",
+    });
   };
 
   return (
@@ -71,7 +81,6 @@ export const Login = () => {
               <FormLabel>Username</FormLabel>
               <Input
                 type="userName"
-                value={"test123"}
                 onChange={(e) => {
                   setInputs((input) => ({
                     ...input,
@@ -95,7 +104,6 @@ export const Login = () => {
                     password: e.target.value,
                   }));
                 }}
-                value={"Example@123"}
               />
             </FormControl>
             <Button

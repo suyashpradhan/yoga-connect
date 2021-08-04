@@ -1,8 +1,9 @@
-import { Image, Heading, Box } from "@chakra-ui/react";
+import { Image, Heading, Box, Button } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { UserCard } from "../../components/UserCard";
 import { Navbar } from "../../components/Navbar";
+import { Link } from "react-router-dom";
 
 export const Followers = () => {
   const { userName } = useParams();
@@ -45,6 +46,39 @@ export const Followers = () => {
               >
                 No one is following you. When they do, they’ll be listed here.
               </Heading>
+
+              <Link to="/search">
+                <Box
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignContent={"center"}
+                  flexDirection={"column"}
+                >
+                  <Button
+                    backgroundColor={"brand.button"}
+                    color={"brand.white"}
+                    fontFamily={"default.heading"}
+                    variant={"solid"}
+                    border={"1px"}
+                    borderColor={"brand.button"}
+                    fontSize={"md"}
+                    textAlign={"center"}
+                    width={"fit-content"}
+                    h={"10"}
+                    _hover={{
+                      border: "1px",
+                      borderColor: "brand.button",
+                      color: "brand.white",
+                      background: "brand.primary",
+                    }}
+                    fontWeight={"500"}
+                    type="submit"
+                    mx={"auto"}
+                  >
+                    Follow Users
+                  </Button>
+                </Box>
+              </Link>
             </Box>
           </Box>
         </>

@@ -7,15 +7,18 @@ import {
   Input,
   Stack,
   Image,
+  Spinner,
 } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { register } from "./authenticationSlice";
-import { Toast } from "../../components/Toast";
 
 export const Register = () => {
+  const toast = useToast();
+
   const [{ userName, password, email, fullName }, setInputs] = useState({
     fullName: "",
     password: "",
@@ -24,7 +27,6 @@ export const Register = () => {
   });
 
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
 
   const registerUserHandler = async (e) => {
     e.preventDefault();
@@ -36,11 +38,18 @@ export const Register = () => {
       password: "",
       email: "",
     }));
+
+    toast({
+      title: "Account created.",
+      description: "Please Login with your newly created credentials.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      fontFamily: "default.heading",
+    });
   };
 
-  return auth.signup ? (
-    <Toast />
-  ) : (
+  return (
     <Stack
       fontFamily={"default.heading"}
       backgroundColor={"brand.primary"}

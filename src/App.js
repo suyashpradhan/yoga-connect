@@ -1,3 +1,4 @@
+import { Spinner } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +32,17 @@ export const App = () => {
 
   return (
     <>
-      {(user.loading || posts.loading) && <p>loading</p>}
+      {(user.loading || posts.loading) && (
+        <div style={{ position: "relative", top: "50%" }}>
+          <Spinner
+            thickness="4px"
+            speed="0.6s"
+            emptyColor="gray.200"
+            color="brand.500"
+            size="xl"
+          />
+        </div>
+      )}
       <PageRoutes />
     </>
   );

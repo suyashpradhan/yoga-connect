@@ -66,7 +66,7 @@ export const userAuthenticationSlice = createSlice({
   },
   extraReducers: {
     [login.pending]: (state) => {
-      state.status = "loading";
+      state.status = true;
     },
     [login.fulfilled]: (state, action) => {
       const token = action.payload.token;

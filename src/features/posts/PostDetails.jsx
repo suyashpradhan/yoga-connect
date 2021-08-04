@@ -22,7 +22,6 @@ export const PostDetails = () => {
   let postData = useSelector((state) => state.posts.posts).find(
     (post) => post._id === postId
   );
-  console.log(postData);
   const postDispatch = useDispatch();
   const user = useSelector((state) => state.users.users).find(
     (user) => user.userName === userName

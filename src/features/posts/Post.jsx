@@ -6,22 +6,21 @@ import {
   Container,
   Heading,
   chakra,
+  useToast,
 } from "@chakra-ui/react";
-import { DeleteIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import {
-  fetchAllPosts,
-  deletePostButtonPressed,
-  likeButtonPressed,
-} from "./postSlice";
+import { fetchAllPosts, likeButtonPressed } from "./postSlice";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 export const Post = ({ post }) => {
+  const toast = useToast();
+
   const postDispatch = useDispatch();
   let user = useSelector((state) =>
     state.users.users.find((user) => user._id === post.userId)
   );
+
   const currentUser = useSelector((state) => state.auth.login);
   const navigate = useNavigate();
 

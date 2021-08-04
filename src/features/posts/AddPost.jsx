@@ -3,12 +3,11 @@ import {
   Box,
   Avatar,
   Button,
-  Grid,
   Stack,
   Container,
   FormControl,
-  Heading,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,18 +16,29 @@ import { postButtonPressed, fetchAllPosts } from "./postSlice";
 import { Navbar } from "../../components/Navbar";
 
 export const AddPost = () => {
+  const toast = useToast();
+  const [postData, setPostData] = useState("");
+  const navigate = useNavigate();
+
   const postDispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.login);
   const user = useSelector((state) => state.users.users).find(
     (user) => user._id === currentUser._id
   );
-  const navigate = useNavigate();
-  const [postData, setPostData] = useState("");
 
   const addPost = () => {
     postDispatch(fetchAllPosts());
     postDispatch(postButtonPressed({ postData }));
     setPostData("");
+    setTimeout(() => {
+      toast({
+        title: "Post Added!",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        fontFamily: "default.heading",
+      });
+    }, 1500);
   };
 
   return (
